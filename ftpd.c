@@ -195,8 +195,8 @@ int ftpd_send_file(int sockfd, struct sockaddr_in client,
     /* send file_info_struct */
     retval = ftpd_send_info(sockfd, info, sizeof(*info));
     if (retval < 0) {
-		shutdown(sockfd, SHUT_RDWR);
-		return -1;
+        shutdown(sockfd, SHUT_RDWR);
+        return -1;
     }
 
     /* send file content */
@@ -208,14 +208,14 @@ int ftpd_send_file(int sockfd, struct sockaddr_in client,
             bytes_to_be_sent = bytes_not_sent;
         retval = ftpd_send_info(sockfd, file + bytes_sent, bytes_to_be_sent);
         if (retval < 0) {
-			shutdown(sockfd, SHUT_RDWR);
-			return -2;
+            shutdown(sockfd, SHUT_RDWR);
+            return -2;
         }
         bytes_sent += retval;
         usleep(100000);  /* simple flow control: 10kb/s */
     }
 
-	shutdown(sockfd, SHUT_RDWR);
+    shutdown(sockfd, SHUT_RDWR);
     return bytes_sent;
 }
 
